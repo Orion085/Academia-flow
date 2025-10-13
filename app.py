@@ -137,9 +137,16 @@ def check_clash(teacher_id, timeslot_id, class_id, exclude_entry_id=None):
     if teacher_clash:
         return {'clash': True, 'type': 'teacher', 'message': f'Teacher is already assigned at this time slot'}
     
-    room_clash = query.filter_by(class_id=class_id).first()
-    if room_clash:
-        return {'clash': True, 'type': 'room', 'message': f'This class already has a subject scheduled at this time slot'}
+    class_clash = query.filter_by(class_id=class_id).first()
+    if class_clash:
+        return {'clash': True, 'type': 'class', 'message': f'This class already has a subject scheduled at this time slot'}
+    
+    current_class = Class.query.get(class_id)
+    if current_class and current_class.room:
+        room_entries = query.join(Class).filter(Class.room == current_class.room).all()
+        if room_entries:
+            existing_class = room_entries[0].class_obj
+            return {'clash': True, 'type': 'room', 'message': f'Room {current_class.room} is already occupied by {existing_class.name} {existing_class.section or ""} at this time slot'}
     
     return {'clash': False}
 
