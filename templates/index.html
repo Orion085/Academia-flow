@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-calendar-alt"></i> Routine Management System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showSection('dashboard')">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('teachers')">
+                            <i class="fas fa-chalkboard-teacher"></i> Teachers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('subjects')">
+                            <i class="fas fa-book"></i> Subjects
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('classes')">
+                            <i class="fas fa-door-open"></i> Classes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('timeslots')">
+                            <i class="fas fa-clock"></i> Time Slots
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('timetable')">
+                            <i class="fas fa-table"></i> Timetable
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div id="dashboard" class="section">
+            <h2 class="mb-4">Dashboard</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-chalkboard-teacher"></i> Teachers</h5>
+                            <h3 id="teacherCount">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-book"></i> Subjects</h5>
+                            <h3 id="subjectCount">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-info mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-door-open"></i> Classes</h5>
+                            <h3 id="classCount">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-warning mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-calendar-check"></i> Entries</h5>
+                            <h3 id="entryCount">0</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Quick Start Guide</h5>
+                        </div>
+                        <div class="card-body">
+                            <ol>
+                                <li>Add Teachers, Subjects, and Classes from their respective sections</li>
+                                <li>Configure Time Slots for your schedule (days and periods)</li>
+                                <li>Create timetable entries by assigning teachers and subjects to classes</li>
+                                <li>View and export timetables as PDF</li>
+                            </ol>
+                            <button class="btn btn-primary" onclick="initializeSampleData()">
+                                <i class="fas fa-database"></i> Initialize Sample Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="teachers" class="section" style="display:none;">
+            <h2 class="mb-4">Teachers Management</h2>
+            <button class="btn btn-primary mb-3" onclick="showAddTeacherModal()">
+                <i class="fas fa-plus"></i> Add Teacher
+            </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Department</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teachersList"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="subjects" class="section" style="display:none;">
+            <h2 class="mb-4">Subjects Management</h2>
+            <button class="btn btn-primary mb-3" onclick="showAddSubjectModal()">
+                <i class="fas fa-plus"></i> Add Subject
+            </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subjectsList"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="classes" class="section" style="display:none;">
+            <h2 class="mb-4">Classes Management</h2>
+            <button class="btn btn-primary mb-3" onclick="showAddClassModal()">
+                <i class="fas fa-plus"></i> Add Class
+            </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Section</th>
+                            <th>Room</th>
+                            <th>Capacity</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="classesList"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="timeslots" class="section" style="display:none;">
+            <h2 class="mb-4">Time Slots Management</h2>
+            <button class="btn btn-primary mb-3" onclick="showAddTimeslotModal()">
+                <i class="fas fa-plus"></i> Add Time Slot
+            </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Period Name</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Break</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timeslotsList"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="timetable" class="section" style="display:none;">
+            <h2 class="mb-4">Timetable Management</h2>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <button class="btn btn-primary" onclick="showAddEntryModal()">
+                        <i class="fas fa-plus"></i> Add Entry
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="filterClass" onchange="loadTimetableEntries()">
+                        <option value="">All Classes</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="filterTeacher" onchange="loadTimetableEntries()">
+                        <option value="">All Teachers</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="filterDay" onchange="loadTimetableEntries()">
+                        <option value="">All Days</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                    </select>
+                </div>
+            </div>
+            <div id="timetableView"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="teacherModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Teacher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="teacherForm">
+                        <input type="hidden" id="teacherId">
+                        <div class="mb-3">
+                            <label class="form-label">Name*</label>
+                            <input type="text" class="form-control" id="teacherName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="teacherEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="teacherPhone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <input type="text" class="form-control" id="teacherDepartment">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveTeacher()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="subjectModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Subject</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="subjectForm">
+                        <input type="hidden" id="subjectId">
+                        <div class="mb-3">
+                            <label class="form-label">Code*</label>
+                            <input type="text" class="form-control" id="subjectCode" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name*</label>
+                            <input type="text" class="form-control" id="subjectName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="subjectDescription"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveSubject()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="classModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Class</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="classForm">
+                        <input type="hidden" id="classId">
+                        <div class="mb-3">
+                            <label class="form-label">Name*</label>
+                            <input type="text" class="form-control" id="className" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Section</label>
+                            <input type="text" class="form-control" id="classSection">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Room</label>
+                            <input type="text" class="form-control" id="classRoom">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Capacity</label>
+                            <input type="number" class="form-control" id="classCapacity">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveClass()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="timeslotModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Time Slot</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="timeslotForm">
+                        <input type="hidden" id="timeslotId">
+                        <div class="mb-3">
+                            <label class="form-label">Day*</label>
+                            <select class="form-select" id="timeslotDay" required>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Period Name</label>
+                            <input type="text" class="form-control" id="timeslotPeriod">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Start Time*</label>
+                            <input type="time" class="form-control" id="timeslotStart" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">End Time*</label>
+                            <input type="time" class="form-control" id="timeslotEnd" required>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="timeslotBreak">
+                                <label class="form-check-label" for="timeslotBreak">
+                                    This is a break period
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveTimeslot()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="entryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Timetable Entry</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="clashAlert" class="alert alert-danger" style="display:none;"></div>
+                    <form id="entryForm">
+                        <input type="hidden" id="entryId">
+                        <div class="mb-3">
+                            <label class="form-label">Class*</label>
+                            <select class="form-select" id="entryClass" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Teacher*</label>
+                            <select class="form-select" id="entryTeacher" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subject*</label>
+                            <select class="form-select" id="entrySubject" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Day*</label>
+                            <select class="form-select" id="entryDay" onchange="loadTimeslotsForDay()" required>
+                                <option value="">Select Day</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Time Slot*</label>
+                            <select class="form-select" id="entryTimeslot" required></select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveEntry()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

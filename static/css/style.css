@@ -1,0 +1,108 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.section {
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.timetable-grid {
+    overflow-x: auto;
+}
+
+.timetable-table {
+    min-width: 800px;
+}
+
+.timetable-cell {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    min-height: 80px;
+    vertical-align: top;
+}
+
+.timetable-entry {
+    background-color: #e7f3ff;
+    border-left: 3px solid #0d6efd;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.timetable-entry:hover {
+    background-color: #d0e7ff;
+}
+
+.entry-subject {
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+.entry-teacher {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.entry-room {
+    font-size: 0.85em;
+    color: #6c757d;
+}
+
+.btn-action {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.modal-header {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+.export-btn {
+    margin-top: 10px;
+}
+
+.break-slot {
+    background-color: #fff3cd !important;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    opacity: 0.8;
+}
