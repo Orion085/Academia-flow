@@ -132,24 +132,7 @@ This project demonstrates:
 - ✅ PDF generation and reporting
 - ✅ Responsive web design
 
-## 🔮 Future Enhancements
 
-- Automated timetable generation using constraint satisfaction algorithms
-- Teacher workload balancing and optimization
-- Teacher preference system for time slots
-- Timetable versioning and comparison
-- Bulk import/export via Excel
-- Email notifications for schedule changes
-- Multi-semester support
-- Advanced analytics and reporting dashboard
-
-## 🤝 Contributing
-
-This is an educational project built to demonstrate automation logic and full-stack integration. Feel free to extend it with additional features!
-
-## 📄 License
-
-This project is open source and available for educational purposes.
 
 ---
 
